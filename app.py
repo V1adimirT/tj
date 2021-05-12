@@ -2,7 +2,6 @@
 
 
 # Сторонние импорты
-import pandas as pd
 import streamlit as st
 
 
@@ -10,10 +9,12 @@ import streamlit as st
 from modules import load_xml
 
 st.title('Демо журнала для трейдинга')
-file_xml = st.sidebar.file_uploader("Загрузить файл xml", type="xml")
+file_type = 'xml'
+file_with_trades = st.sidebar.file_uploader("Загрузить файл", type=file_type)
 
-if file_xml:
-     data = load_xml.parseXML(file_xml)
-     df = pd.DataFrame.from_dict(data)
+if file_with_trades:
+     if file_with_trades.__getattribute__('type') == 'text/xml':
+          df = load_xml.parseXML(file_with_trades)
+     
      st.write(df)
 
